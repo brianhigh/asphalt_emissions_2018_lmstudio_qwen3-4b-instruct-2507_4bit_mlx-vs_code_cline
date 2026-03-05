@@ -54,7 +54,7 @@ Generate a Markdown file that includes:
 * **Header:** Project title and a brief description of the study.
 * **Visual:** Embed the generated PNG (use a relative path).
 * **Citations:** * Data: *U.S. EPA 2018 State County Inventory.*
-* Research: *Anthropogenic secondary organic aerosol and ozone production from asphalt-related emissions, Environ. Sci.: Atmos., 2023, 3, 1221-1230.*
+* Research: *Anthropogenic secondary organic aerosol and ozone production from asphalt-related emissions, Environ. Sci.: Atmos., 2023, 3, 1221-1230. https://doi.org/10.1039/D3EA00066D*
 
 
 * **Project Structure Tree:**
