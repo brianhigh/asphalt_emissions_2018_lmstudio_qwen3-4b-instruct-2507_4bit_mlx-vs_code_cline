@@ -44,7 +44,7 @@ p <- plot_usmap(data = emissions_data, values = "emissions_per_capita") +
                        midpoint = median(emissions_data$emissions_per_capita),
                        na.value = "grey90",
                        # 4. The 2 lines below were modified from `guides(...)` further below. (@brianhigh)
-                       name = "Per Capita\nEmissions\n(kg/person",
+                       name = "Per Capita\nEmissions\n(kg/person)",
                        guide = "colourbar") +
   theme_void() +
   theme(panel.background = element_rect(fill = "white", color = NA),
