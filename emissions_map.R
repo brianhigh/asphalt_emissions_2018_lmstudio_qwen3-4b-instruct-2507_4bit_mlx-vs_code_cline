@@ -3,7 +3,7 @@
 # The LLM made several errors in the original code, including
 # incorrect download method, missing plot settings, and misplacement
 # of the output file path. These have been corrected in this version.
-# So, 10 corrections were made, commented and attributed to @brianhigh.
+# So, 10 corrections were made, commented by (and attributed to) @brianhigh.
 
 # Load required packages
 if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
