@@ -1,0 +1,58 @@
+{%- if messages[0]['role'] == 'system' -%}
+    {%- set system_message = messages[0]['content'] -%}
+    {%- set loop_messages = messages[1:] -%}
+{%- else -%}
+    {%- set system_message = "" -%}
+    {%- set loop_messages = messages -%}
+{%- endif -%}
+
+<|im_start|>system
+{% if system_message %}{{ system_message }}{% endif %}
+
+{%- if tools is not none and tools|length > 0 %}
+# Tools and XML Schema
+You have access to the following tools. Each tool must be used according to this XML schema:
+
+<tools>
+{% for tool in tools %}
+{{ tool.function | tojson }}
+{% endfor %}
+</tools>
+
+## Tool Use Format
+1. Think about the approach in <thinking> tags
+2. Call tool using XML format:
+   <tool_name>
+     <param_name>value</param_name>
+   </tool_name>
+3. Process tool response from:
+   <tool_response>result</tool_response>
+{%- endif %}
+<|im_end|>
+
+{%- for message in loop_messages -%}
+    <|im_start|>{{ message['role'] }}
+    {%- if message['role'] == 'assistant' and message['tool_calls'] -%}
+        {%- for tool_call in message['tool_calls'] -%}
+<thinking>
+[Analysis of current state and next steps]
+</thinking>
+<{{ tool_call.function.name }}>
+{%- for key, value in tool_call.function.arguments.items() %}
+<{{ key }}>{{ value }}</{{ key }}>
+{%- endfor %}
+</{{ tool_call.function.name }}>
+        {%- endfor -%}
+    {%- elif message['role'] == 'tool' -%}
+<tool_response>
+{{ message['content'] }}
+</tool_response>
+    {%- else -%}
+{{ message['content'] }}
+    {%- endif -%}
+    <|im_end|>
+{%- endfor -%}
+
+{%- if add_generation_prompt -%}
+    <|im_start|>assistant
+{%- endif -%}
