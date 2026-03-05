@@ -43,8 +43,9 @@ p <- plot_usmap(data = emissions_data, values = "emissions_per_capita") +
   scale_fill_gradient2(low = "darkgreen", mid = "yellow", high = "red",
                        midpoint = median(emissions_data$emissions_per_capita),
                        na.value = "grey90",
-                       # 4. The line below was added from `guides(...)` below. (@brianhigh)
-                       guide = guide_legend(title = "Per Capita\nEmissions\n(kg/person)")) +
+                       # 4. The 2 lines below were modified from `guides(...)` further below. (@brianhigh)
+                       name = "Per Capita\nEmissions\n(kg/person",
+                       guide = "colourbar") +
   theme_void() +
   theme(panel.background = element_rect(fill = "white", color = NA),
         plot.background = element_rect(fill = "white", color = NA)) +
@@ -61,5 +62,8 @@ p <- plot_usmap(data = emissions_data, values = "emissions_per_capita") +
 
 # Export the map
 ggsave("plots/asphalt_emissions_map.png", plot = p, width = 10, height = 7, dpi = 300, bg = "white")
+
+
+
 
 
