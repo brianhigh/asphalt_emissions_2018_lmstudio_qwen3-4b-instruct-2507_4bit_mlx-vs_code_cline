@@ -26,7 +26,7 @@ Create a reproducible R project that visualizes 2018 U.S. asphalt emissions. The
 ### **3. Visualization Requirements**
 
 * **Base Map:** Use `plot_usmap(data = emissions_data, values = "emissions_per_capita")`.
-* **Color Theory:**
+* **Color Gradient:**
    * Apply `scale_fill_gradient2()` with a three-color gradient: **darkgreen** (low), **yellow** (mid), and **red** (high).
    * Set the `midpoint` dynamically to the **median** of the emissions data.
    * Handle `NA` values by coloring those states **grey90**.
@@ -34,7 +34,7 @@ Create a reproducible R project that visualizes 2018 U.S. asphalt emissions. The
 
 * **Styling:**
    * **Theme:** Use `theme_void()` as a starting point, then override with `panel.background = element_rect(fill = "white", color = NA)` and `plot.background = element_rect(fill = "white", color = NA)`.
-   * **Legend:** Place on the right. Format labels using `scales::comma`.
+   * **Legend:** Place on the right.
 
 
 * **Annotations:**
