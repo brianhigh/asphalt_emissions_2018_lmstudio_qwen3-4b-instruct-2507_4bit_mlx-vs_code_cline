@@ -7,7 +7,13 @@ Create a reproducible R project that visualizes 2018 U.S. asphalt emissions. The
 
 ### **1. Environment & Setup**
 
-* **Package Management:** Use `pacman::p_load()` to check for, install, and load: `dplyr`, `ggplot2`, `readxl`, and `usmap`.
+* **Package Management:** Use `pacman::p_load()` to check for, install, and load: `dplyr`, `ggplot2`, `readxl`, and `usmap`. For example:
+
+```r
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_load(dplyr, ggplot2, readxl, usmap)
+```
+
 * **Directory Logic:** The script must programmatically check for and create two directories: `data/` and `plots/`.
 * **File Handling:** Download the Excel file from the [EPA URL](https://pasteur.epa.gov/uploads/10.23719/1531683/AP_2018_State_County_Inventory.xlsx) into `data/` only if it doesn't already exist. Use `mode = "wb"` for the download.
 
