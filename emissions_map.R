@@ -1,5 +1,5 @@
 # Create a choropleth map of US Asphalt Emissions for 2018
-# This script was created by Qwen3-4b-Instruct-4bit (MLX) with 6 manual (human) edits (@brianhigh)
+# This script was created by Qwen3-4b-Instruct-4bit (MLX) with 7 manual (human) edits (@brianhigh)
 
 # Load required packages
 #library(pacman)     # 1. Replaced with a *conditional* install of pacman, below. (@brianhigh)
@@ -30,7 +30,8 @@ emissions_data <- readxl::read_excel(data_file, sheet = "Output - State",
 # Clean and process the data
 emissions_data <- emissions_data %>%
   rename(state = `State`, emissions_per_capita = `Total kg/person`) %>%
-  mutate(emissions_per_capita = as.numeric(as.character(suppressWarnings(as.character(emissions_per_capita))))) %>%
+  # 3. Below, was 'as.numeric(as.character(suppressWarnings(as.character(emissions_per_capita))))' (@brianhigh)
+  mutate(emissions_per_capita = suppressWarnings(as.numeric((as.character(emissions_per_capita))))) %>%
   mutate(state = tolower(state))
 
 # Remove any rows with NA emissions (to avoid issues in plotting)
@@ -38,12 +39,12 @@ emissions_data <- emissions_data %>%
   filter(!is.na(emissions_per_capita))
 
 # Create the choropleth map
-# library(usmap)          # 3. Commented out as not needed (redundant). (@brianhigh)
+# library(usmap)          # 4. Commented out as not needed (redundant). (@brianhigh)
 p <- plot_usmap(data = emissions_data, values = "emissions_per_capita") +
   scale_fill_gradient2(low = "darkgreen", mid = "yellow", high = "red",
                        midpoint = median(emissions_data$emissions_per_capita),
                        na.value = "grey90",
-                       # 4. The 2 lines below were modified from `guides(...)` further below. (@brianhigh)
+                       # 5. The 2 lines below were modified from `guides(...)` further below. (@brianhigh)
                        name = "Per Capita\nEmissions\n(kg/person)",
                        guide = "colourbar") +
   theme_void() +
@@ -52,8 +53,9 @@ p <- plot_usmap(data = emissions_data, values = "emissions_per_capita") +
   labs(title = "Per Capita Asphalt Emissions by State (2018)",
        subtitle = "Total kilograms per person based on EPA State County Inventory data.",
        caption = "Source: EPA (2023) | DOI: 10.1039/D3EA00066D") +
-  #guides(fill = guide_legend(title = "Per Capita Emissions (kg/person)")) +  # 5. See above (@brianhigh)
-  #coord_map() +          # 6. Commented out as not needed and doesn't work. (@brianhigh)
+  # 6. Commented out guides(), below as this belongs above. See 5. (@brianhigh)
+  #guides(fill = guide_legend(title = "Per Capita Emissions (kg/person)")) +
+  #coord_map() +          # 7. Commented out as not needed and doesn't work. (@brianhigh)
   theme(legend.position = "right",
         legend.title = element_text(size = 10),
         plot.title = element_text(size = 14, face = "bold"),
