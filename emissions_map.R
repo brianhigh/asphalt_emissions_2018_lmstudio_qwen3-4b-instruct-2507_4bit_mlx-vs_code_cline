@@ -24,7 +24,7 @@ process_emissions_data <- function() {
   # Try to download the file, create a backup if needed
   if (!file.exists(data_file)) {
     tryCatch({
-      # The LLM assigned method = "wb" incorrectly, and had no "method" (@brianhigh)
+      # The LLM assigned method = "wb" incorrectly, and had no "mode" (@brianhigh)
       download.file(data_url, data_file, method = "curl", mode = "wb")
       cat("Data downloaded successfully.\n")
     }, error = function(e) {
@@ -96,11 +96,11 @@ create_emissions_map <- function(data) {
       subtitle = "Total kilograms per person based on EPA State County Inventory data.",
       caption = "Source: EPA (2023) | DOI: 0.1039/D3EA00066D"
     ) +
-    #guides(fill = guide_legend("right")) +    # Redunant (@brianhigh)
+    #guides(fill = guide_legend("right")) +    # Redundant (@brianhigh)
     theme(
       plot.title = element_text(size = 12, face = "bold"),
       plot.subtitle = element_text(size = 10, face = "italic"),
-      # The LLM made the caption gray too light to read, so I darkened it (@brianhigh)
+      # The LLM made the caption gray too light to read ("gray"), so I darkened it ("gray20") (@brianhigh)
       plot.caption = element_text(size = 8, hjust = 0, vjust = 0, color = "gray20"),
       legend.title = element_text(size = 10)
     )
